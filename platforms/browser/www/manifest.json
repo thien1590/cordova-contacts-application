@@ -1,11 +1,11 @@
 {
   "background_color": "#FFF",
   "display": "standalone",
-  "name": "helloworld",
-  "short_name": "helloworld",
+  "name": "Hỗ trợ tài chính",
+  "short_name": "Hỗ trợ tài chính",
   "version": "com.phonegap.helloworld",
-  "description": "Hello World sample application that responds to the deviceready event.",
-  "author": "PhoneGap Team",
+  "description": "Đây là ứng dụng của đội hỗ trợ tài chính Khánh Hoà.",
+  "author": "JK",
   "icons": [],
   "start_url": "index.html"
 }
