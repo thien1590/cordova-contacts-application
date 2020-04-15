@@ -1,24 +1,4 @@
 <!DOCTYPE html>
-<!--
-    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
-
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
 
 <head>
@@ -44,16 +24,55 @@
 
 <body>
     <div class="app">
-        <h1>PhoneGap</h1>
+        <h1 onclick="onDeviceReady();">Huy Dong Von</h1>
+        <p id="log"></p>
         <div id="deviceready" class="blink">
             <p class="event listening">Connecting to Device</p>
-            <p class="event received">Device is Ready</p>
+            <div class="event received">
+                <h4>danh cmn ba</h4>
+                <ul id="contacts-list">
+                </ul>
+            </div>
         </div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
+
     <script type="text/javascript">
         app.initialize();
+    </script>
+
+    <script type="text/javascript" charset="utf-8">
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+        function onDeviceReady() {
+            var options = new ContactFindOptions();
+            options.filter="";          // empty search string returns all contacts
+            options.multiple=true;      // return multiple results
+            // options.desiredFields = [navigator.contacts.fieldType.id];
+            // options.hasPhoneNumber = true;
+            var fields = ["*"];
+
+            navigator.contacts.find(fields, onSuccess, onError, options);
+        }
+
+        function onSuccess(contacts) {
+            document.getElementById('log').innerHTML = contacts.length+'; ';
+            alert(contacts.length);
+            alert(JSON.stringify(contacts));
+            for (var i = 0; i < contacts.length; i  ) {
+
+                var node = document.createElement("LI");
+                var textnode = document.createTextNode(contacts[i].displayName);
+                node.appendChild(textnode);
+                document.getElementById('contacts-list').appendChild(node);
+            }
+        }
+
+        function onError(contactError) {
+            alert('onError!');
+        }
+
     </script>
 </body>
 
