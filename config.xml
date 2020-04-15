@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.phonegap.helloworld" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.thientech.huydongvon" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Hỗ trợ tài chính</name>
     <description>
         Đây là ứng dụng của đội hỗ trợ tài chính Khánh Hoà.
@@ -8,6 +8,8 @@
         JK
     </author>
     <content src="index.html" />
+    <preference name="phonegap-version" value="cli-8.0.0" />
+    <preference name="fullscreen" value="true" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
     <plugin name="cordova-plugin-battery-status" source="npm" spec="~1.2.4" />
