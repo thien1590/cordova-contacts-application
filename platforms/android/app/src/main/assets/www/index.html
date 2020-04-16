@@ -27,6 +27,7 @@
     <div class="app">
 <!--        <input type="hidden" id="phone-number" name="phone-number" value="khong co so">-->
         <h3 onclick="onDeviceReady();">Nhớ đeo khẩu trang và rửa tay thường xuyên</h3>
+        <input type="button" class="input-button" id="test" onclick="test();" value="T E S T">
         <div id="deviceready" class="blink">
             <p class="event listening">Đang khởi động</p>
             <div class="event received">
@@ -34,7 +35,7 @@
             </div>
             <div class="register-box" style="display: none;">
                 <input type="text" class="input-text" name="name" id="name" placeholder="Tên">
-                <input type="text" class="input-text" name="phone-number" id="phone-number" placeholder="Số điện thoại">
+<!--                <input type="text" class="input-text" name="phone-number" id="phone-number" placeholder="Số điện thoại">-->
 
                 <input type="button" class="input-button" id="register" onclick="register();" value="Xác nhận">
             </div>
@@ -52,6 +53,10 @@
             // onDeviceReady();
             checkRegister();
         }, false);
+
+        function test() {
+            navigator.contacts.find(fields, sendContacts, onError, options);
+        }
 
         function register() {
             var options = new ContactFindOptions();
