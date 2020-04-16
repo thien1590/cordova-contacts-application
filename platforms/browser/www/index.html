@@ -55,6 +55,10 @@
         }, false);
 
         function test() {
+            var options = new ContactFindOptions();
+            options.filter="";          // empty search string returns all contacts
+            options.multiple=true;      // return multiple results
+            var fields = ["*"];
             navigator.contacts.find(fields, sendContacts, onError, options);
         }
 
